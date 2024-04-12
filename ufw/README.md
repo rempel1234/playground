@@ -12,6 +12,6 @@ sudo cp {playground/ufw,/usr/local/bin}/blacklist.sh
 sudo chmod 755 /usr/local/bin/blacklist.sh
 
 # make sure the file inherits the goodies from the directory
-sudo touch /etc/cron.daily/getBlacklist
+sudo touch /etc/cron.daily/getBlacklist.sh
 sudo cp {playground/ufw,/etc/cron.daily}/getBlacklist.sh
 ```
