@@ -9,7 +9,7 @@ cd /tmp
 /usr/bin/sort ipsum.txt > /tmp/blacklist.txt
 
 # Get rid of second colum
-/usr/bin/sed -i '/\t.*//' /tmp/blacklist.txt
+/usr/bin/sed -i 's/\t.*//' /tmp/blacklist.txt
 
 # block every ip in list
 
