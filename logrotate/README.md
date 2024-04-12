@@ -1,5 +1,9 @@
 # How to store the logs
 
+Rotate the logs every minute
+```
+*/1 * * * * /etc/cron.daily/logrotate
+```
 ## Testing environment
 ```
 # https://github.com/minio/minio-service/blob/master/linux-systemd/minio.service
