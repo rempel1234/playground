@@ -9,7 +9,7 @@ git clone https://https://github.com/rempel1234/playground.git
 sudo touch /usr/local/bin/blacklist.sh
 
 sudo cp {playground/ufw,/usr/local/bin}/blacklist.sh
-chmod 755 /usr/local/bin/blacklist.sh
+sudo chmod 755 /usr/local/bin/blacklist.sh
 
 # make sure the file inherits the goodies from the directory
 sudo touch /etc/cron.daily/getBlacklist
