@@ -1,9 +1,15 @@
 #!/bin/bash
 # Place in /etc/cron.daily/getBlacklist
 
+cd /tmp
 # get latest black list from abuseIPDB
+/usr/bin/touch /tmp/blacklist.txt
+/usr/bin/curl -Olk https://raw.githubusercontent.com/stamparm/ipsum/master/ipsum.txt
 
-curl -Ol https://raw.githubusercontent.com/stamparm/ipsum/master/ipsum.txt | sort > /tmp/blacklist
+/usr/bin/sort ipsum.txt > /tmp/blacklist.txt
+
+# Get rid of second colum
+/usr/bin/sed -i '/\t.*//' /tmp/blacklist.txt
 
 # block every ip in list
 
