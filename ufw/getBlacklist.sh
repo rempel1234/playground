@@ -3,10 +3,7 @@
 
 # get latest black list from abuseIPDB
 
-curl -G https://api.abuseipdb.com/api/v2/blacklist \
-  -d confidenceMinimum=50 \
-  -H "Key: <API_KEY>" \
-  -H "Accept: text/plain" | sort > /tmp/blacklist
+curl -Ol https://raw.githubusercontent.com/stamparm/ipsum/master/ipsum.txt | sort > /tmp/blacklist
 
 # block every ip in list
 
