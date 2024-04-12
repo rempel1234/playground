@@ -1,0 +1,12 @@
+/var/log/myapp.log {
+    rotate 7
+    daily
+    compress
+    missingok
+    notifempty
+    sharedscripts
+    postrotate
+        /usr/bin/s3cmd put /var/log/myapp.log.* s3://your-bucket-name/
+        /bin/rm -f /var/log/myapp.log.*
+    endscript
+}
