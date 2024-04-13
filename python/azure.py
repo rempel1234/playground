@@ -1,6 +1,32 @@
 import requests
 import pandas as pd
 
+
+azure_vms_url = "https://azure.microsoft.com/api/v2/pricing/virtual-machines-base/calculator/"
+azure_vms_response = requests.get(azure_vms_url).json()
+pd_azure_vms = pd.DataFrame.from_dict(azure_vms_response['offers'])
+pd_azure_vms = pd_azure_vms.transpose()
+
+# get the VMS with 4 or more cores
+pd_azure_vms = pd_azure_vms[pd_azure_vms['cores']>3]
+
+# get the VMs with 8 or more GiBs of RAM
+pd_azure_vms = pd_azure_vms[pd_azure_vms['ram']>7]
+
+# now the only sizes that are left are big enough, let's get the prices
+pd_azure_vms.index.name = 'sku'
+
+
+pd_azure_vms = pd_azure_vms['prices']
+
+# pd_azure_vms = pd_azure_vms.explode('prices')
+
+for sku in pd_azure_vms:
+  for key in sku.keys():
+     print(key)
+     sku[key].values()
+    
+
 skip=0
 # while(skip < 1000000)
 while(skip < 2000):
