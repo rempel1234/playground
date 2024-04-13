@@ -1,4 +1,3 @@
-
 import pandas as pd
 import requests
 
@@ -27,6 +26,33 @@ pd_linode_regions['cloud']='Linode'
 # 0        ap-west       Mumbai      IN
 # 1     ca-central      Toronto      CA
 # 2   ap-southeast       Sydney      AU
+
+linode_types_url = "https://api.linode.com/v4/linode/types"
+linode_types_response = requests.get(linode_types_url)
+linode_types_response.json()
+pd_linode_types=pd.DataFrame(linode_types_response.json()['data'])
+pd_linode_types['monthly']=pd.json_normalize(pd_linode_types['price'])['monthly']
+pd_linode_types = pd_linode_types.explode('region_prices')
+pd_linode_types = pd_linode_types[pd_linode_types['memory'] > 8000].reset_index(drop=True)
+pd_linode_types = pd_linode_types[pd_linode_types['vcpus'] > 3].reset_index(drop=True)
+# get rid of unneeded columns
+pd_linode_types = pd_linode_types[['id', 'region_prices', 'monthly']]
+pd_linode_types['region'] = pd.json_normalize(pd_linode_types['region_prices'])['id']
+pd_linode_types['region_monthly'] = pd.json_normalize(pd_linode_types['region_prices'])['monthly']
+pd_linode_types = pd_linode_types[['id', 'monthly', 'region','region_monthly']]
+pd_linode_types.loc[pd_linode_types['region_monthly'].isnull(),'region_monthly'] = pd_linode_types['monthly']
+pd_linode_regions = pd_linode_regions.merge(pd_linode_types, how='outer', left_on='region', right_on='region')
+
+pd_cross = pd_linode_regions.merge(pd_linode_types, how='outer', left_on='region', right_on='region')
+pd_linode_other = pd_cross[pd_cross['region_x']!=pd_cross['region_y']]
+pd_linode_other = pd_linode_other.rename(columns={"monthly": "monthly_cost", "id": "compute_type"})
+
+pd_linode_markup = pd_cross[pd_cross['region_x']==pd_cross['region_y']]
+pd_linode_markup=pd_linode_markup[['region_x','label','country','cloud','id','region_monthly']]
+pd_linode_markup = pd_linode_markup.rename(columns={"region_monthly": "monthly_cost", "id": "compute_type"})
+frames=[pd_linode_other,pd_linode_markup]
+pd_cross = pd.concat(frames)
+pd_cross.sort_values('region_x', ascending=False).drop_duplicates('A').sort_index()
 
 vultr_regions_url = "https://api.vultr.com/v2/regions"
 vultr_regions_response = requests.get(vultr_regions_url)
