@@ -69,6 +69,12 @@ pd_vultr_plans = pd_vultr_plans.loc[pd_vultr_plans.groupby('locations').monthly_
 # id is needed for IaaS, monthly_cost to get estimate, location to avoid duplication
 pd_vultr_plans = pd_vultr_plans[["id","monthly_cost","locations"]]
 
+# make the id more descriptive
+pd_vultr_plans = pd_vultr_plans.rename(columns={"id": "compute_type"})
+
+# add the monthly cost and compute type to the region table
+pd_vultr_regions = pd_vultr_regions.merge(pd_vultr_plans, left_on='region', right_on='locations').drop(['locations'], axis=1)
+
 
 # figure out how to pick the cheapest type in the region that has the required CPU/RAM/Hard disk
 linode_types_url = "https://api.linode.com/v4/linode/types"
