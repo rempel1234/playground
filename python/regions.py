@@ -16,12 +16,12 @@ vultr_regions_response.json()
 # get the vultr data into a dataframe
 pd_vultr_regions = pd.DataFrame.from_dict(vultr_regions_response.json()['regions'])
 pd_vultr_regions[["id","city","country"]]
-"""
-0   ams       Amsterdam      NL
-1   atl         Atlanta      US
-2   blr       Bangalore      IN
-...
-"""
+# """
+# 0   ams       Amsterdam      NL
+# 1   atl         Atlanta      US
+# 2   blr       Bangalore      IN
+# ...
+# """
 
 
 # figure out how to pick the cheapest type in the region that has the required CPU/RAM/Hard disk
