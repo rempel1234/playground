@@ -13,11 +13,13 @@ pd_azure_vms = pd_azure_vms[pd_azure_vms['cores']>3]
 # get the VMs with 8 or more GiBs of RAM
 pd_azure_vms = pd_azure_vms[pd_azure_vms['ram']>7]
 
-# now the only sizes that are left are big enough, let's get the prices
-pd_azure_vms.index.name = 'sku'
-
+# expand the prices
+pd_azure_vms = pd_azure_vms.prices.apply(pd.Series)
 
 pd_azure_vms = pd_azure_vms['prices']
+pd_azure_vms['sku']=pd_azure_vms.index   
+pd_azure_vms.transpose()
+pd_azure_vms['region']=pd_azure_vms.index
 
 # pd_azure_vms = pd_azure_vms.explode('prices')
 
@@ -25,7 +27,7 @@ for sku in pd_azure_vms:
   for key in sku.keys():
      print(key)
      sku[key].values()
-    
+ sum(pd_azure_vms['linux-a4-basic'].iloc[50].values())    
 
 skip=0
 # while(skip < 1000000)
