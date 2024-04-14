@@ -10,4 +10,26 @@ dict_keys(['cores', 'ram', 'diskSize', 'gpu', 'series', 'isVcpu', 'prices', 'pri
 # if the RAM is 8 or above
 
 # save the price
+for regions in  azure_vms_response['offers']['linux-nv36adsv5-standard']['prices']:
+  azure_vms_response['offers']['linux-nv36adsv5-standard']['prices'][regions]['value']
+
+for sku in  azure_vms_response['offers']:
+  azure_vms_response['offers'][sku]
+  if 'windows' not in sku and azure_vms_response['offers'][sku]['cores']>3 and azure_vms_response['offers'][sku]['cores']<31:
+    for regions in azure_vms_response['offers'][sku]['prices']:
+      sku
+      regions
+      azure_vms_response['offers'][sku]['prices'][regions]['value']
+
+
+
+
+for sku in  azure_vms_response['offers']:
+  if 'windows' not in sku and 'transactions' not in sku:
+    if azure_vms_response['offers'][sku]['cores']>3 and azure_vms_response['offers'][sku]['cores']<16:
+      if azure_vms_response['offers'][sku]['ram']>7 and azure_vms_response['offers'][sku]['ram']<31:
+        for regions in azure_vms_response['offers'][sku]['prices']:
+          sku
+          regions
+          azure_vms_response['offers'][sku]['prices'][regions]['value']
 
