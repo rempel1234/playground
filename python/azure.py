@@ -3,6 +3,8 @@ import pandas as pd
 
 
 azure_vms_url = "https://azure.microsoft.com/api/v2/pricing/virtual-machines-base/calculator/"
+# physical location?
+# https://azure-catalog.vercel.app/regions
 azure_vms_response = requests.get(azure_vms_url).json()
 pd_azure_vms = pd.DataFrame.from_dict(azure_vms_response['offers'])
 pd_azure_vms = pd_azure_vms.transpose()
