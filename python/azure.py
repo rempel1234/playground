@@ -7,17 +7,22 @@ azure_vms_response = requests.get(azure_vms_url).json()
 pd_azure_vms = pd.DataFrame.from_dict(azure_vms_response['offers'])
 pd_azure_vms = pd_azure_vms.transpose()
 
-def convert_dict_to_number(dict):
-  try:
-    sum = 0
-    for key, value in dict.items():
-      sum += value
-    return sum
-  except Exception:
-    return dict
-    pass
-  
-  
+# get rid of transactions
+pd_azure_vms[pd_azure_vms.index!='transactions']
+
+# get rid of pesky NaNs
+# pd_azure_vms=pd_azure_vms.fillna("{'value': 1000}")
+pd_azure_prices = pd.DataFrame(columns=['sku', 'region', 'price'])
+for sku in pd_azure_vms.index:
+  for region in  pd_azure_vms.columns:
+    try:
+      pd_azure_vms[pd_azure_vms.index==sku][region].values[0].values()
+    except:
+      print("probably wasn't a vm of that type there anyway...")
+    print(region)
+    print(sku)
+
+
 # get the VMS with 4 or more cores
 pd_azure_vms = pd_azure_vms[pd_azure_vms['cores']>3]
 
