@@ -7,6 +7,17 @@ azure_vms_response = requests.get(azure_vms_url).json()
 pd_azure_vms = pd.DataFrame.from_dict(azure_vms_response['offers'])
 pd_azure_vms = pd_azure_vms.transpose()
 
+def convert_dict_to_number(dict):
+  try:
+    sum = 0
+    for key, value in dict.items():
+      sum += value
+    return sum
+  except Exception:
+    return dict
+    pass
+  
+  
 # get the VMS with 4 or more cores
 pd_azure_vms = pd_azure_vms[pd_azure_vms['cores']>3]
 
