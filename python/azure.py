@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-
+# todo https://blog.economize.cloud/azure-spot-instance/#:~:text=Users%20can%20query%20the%20spot%20pricing%20data,a%20few%20instance%20types%20in%20Microsoft%20Azure.
 azure_vms_url = "https://azure.microsoft.com/api/v2/pricing/virtual-machines-base/calculator/"
 # physical location?
 # https://azure-catalog.vercel.app/regions
