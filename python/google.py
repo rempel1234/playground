@@ -28,5 +28,6 @@ for zone in soup.findAll('th'):
       df_gce_zones = pd.concat([df_gce_zones, df_temp], ignore_index=True)
       df_gce_zones.reset_index()
 
-
+# parses badly, and would require "invoiced billing"
+df_gce_zones=df_gce_zones[df_gce_zones['region']!='me-central2']
 df_gce_zones
