@@ -3,7 +3,8 @@
 # https://www.oracle.com/cloud/price-list/#pricing-compute
 # https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm
 
-rom bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
+import re
 import requests
 import pandas as pd
 
@@ -17,6 +18,16 @@ html = oracle_locations_response.text
 soup = BeautifulSoup(html, "html.parser")
 
 df_oracle_zones = pd.DataFrame(columns=['region', 'zone'])
+
+for zone in soup.findAll('td'):
+  if 'geo-data' in str(zone):
+    # the region/zone identifier
+    zone['geo-data']
+    # the country/ordinal direction/city
+    zone.contents[0]
+    # the city
+    re.findall('\(([^)]+)', zone.contents[0])[0]
+
 for zone in soup.findAll('th'):
   if 'zone' in str(zone):
     zone_str=zone.contents[0]
